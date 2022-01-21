@@ -46,8 +46,15 @@ public class MyMain {
     // countBigDigits(99999) => 5
     // countBigDigits(521931) => 2
     public static int countBigDigits(int x) {
-        // YOUR CODE HERE
-        return -1;
+        if (x==0){
+            return 0;
+        }
+        else if (x % 10 >= 5){
+            return 1 + countBigDigits(x/10);
+        }
+        else{
+            return countBigDigits(x/10);
+        }
     }
 
     // Write a method that uses recursion to calculate whether
@@ -64,8 +71,20 @@ public class MyMain {
     // moreOddThanEven(99999) => true because 5 odd and 0 even
     // moreOddThanEven(521931) => true because 5 odd and 1 even
     public static boolean moreOddThanEven(int x) {
-        // YOUR CODE HERE
-        return false;
+
+        return moreOddThanEvenTR(x,0,0);
+    }
+
+    public static boolean moreOddThanEvenTR(int x, int odd, int even){
+        if (x==0){
+            return (odd>even);
+        }
+        else if ((x%10)%2==0){
+            return moreOddThanEvenTR(x/10,odd,even+1);
+        }
+        else{
+            return moreOddThanEvenTR(x/10,odd+1,even);
+        }
     }
 
     // This might be helpful to get started:
@@ -81,8 +100,13 @@ public class MyMain {
     // isPalindrome("madam") => true
     // isPalindrome("racecars") => false
     public static boolean isPalindrome(String str) {
-        // YOUR CODE HERE
-        return false;
+        if (str.length()<=1){
+            return true;
+        }
+        else if (str.charAt(0)==str.charAt(str.length()-1)){
+            return isPalindrome(str.substring(1,str.length()-1));
+        }
+        else{return false;}
     }
 
 
@@ -98,8 +122,12 @@ public class MyMain {
     // countBigDigits(99999) => 45
     // countBigDigits(521931) => 21
     public static int addDigits(int x) {
-        // YOUR CODE HERE
-        return -1;
+        if (x==0){
+            return 0;
+        }
+        else{
+            return (x%10) + addDigits(x/10);
+        }
     }
 
     // Write a method that is given a String containing a single pair
@@ -112,8 +140,20 @@ public class MyMain {
     // parenTrim("x(hello)") => "(hello)"
     // parenTrim("(xy)1") => "(xy)"
     public static String parenTrim(String str) {
-        // YOUR CODE HERE
-        return "";
+        boolean first = (str.charAt(0)=='(');
+        boolean last = (str.charAt(str.length()-1)==')');
+        if (first && last){
+            return str;
+        }
+        else if (last){
+            return parenTrim(str.substring(1));
+        }
+        else if (first){
+            return parenTrim(str.substring(0,str.length()-1));
+        }
+        else{
+            return parenTrim(str.substring(1,str.length()-1));
+        }
     }
 
     // This method returns the orignal string reversed;
@@ -123,10 +163,18 @@ public class MyMain {
     // reverse("racecar") => racecar
     public static String reverse(String str) {
         // YOUR CODE HERE
-        return "";
+        return reverseTR(str,"");
     }
 
-
+    public static String reverseTR(String str, String newString){
+        if (str.length()==0){
+            return newString;
+        }
+        else{
+            newString = newString+str.charAt(str.length()-1);
+            return reverseTR(str.substring(0,str.length()-1),newString);
+        }
+    }
 
     public static void main(String[] args) {
         // Optional: Write some code here to test your methods!
